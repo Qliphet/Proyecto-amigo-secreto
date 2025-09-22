@@ -23,6 +23,7 @@ function sortearAmigo() {
     document.querySelector('#amigo').setAttribute('disabled','true');
     let numeroGenerado =  Math.floor(Math.random()*listaDeAmigos.length);
     asignarTextoElemento('h2',`Tu amigo secreto es: ${listaDeAmigos[numeroGenerado]}`);
+    //se cambia el texto del botón de sorteo a reiniciar
     document.querySelector('.button-draw').innerHTML = `
     <img src="assets/play_circle_outline.png" alt="Ícono para sortear">
     Reiniciar sorteo`
@@ -31,7 +32,6 @@ function sortearAmigo() {
     else {
         reiniciarSorteo();
         document.getElementById('amigo').removeAttribute('disabled');
-        document.querySelector('.button-draw').textContent = 'Sortear amigo';
         asignarTextoElemento('h2','Puedes agregar más amigos si quieres');
         limpiarCaja();
         sorteo = true;
@@ -52,7 +52,8 @@ function agregarAmigo() {
         }
         else {
         listaDeAmigos.push(amigoDeUsuario);
-        actualizarLista();;
+        actualizarLista();
+        document.querySelector('.button-draw').removeAttribute('disabled');
         }
     }
 }
@@ -61,11 +62,13 @@ function agregarAmigo() {
 function reiniciarSorteo() {
     listaDeAmigos = [];
     asignarTextoElemento('h2','La lista se ha reiniciado, puedes agregar nuevos amigos');
+    //Se borra la lista en el HTML
     let listaHTML = document.querySelector('ul');
     listaHTML.innerHTML = ''
+    //se cambia el texto del botón de reinicio a sorteo
     document.querySelector('.button-draw').innerHTML = `
     <img src="assets/play_circle_outline.png" alt="Ícono para sortear">
-    Sortear amigo`
+    Sortear amigo`;
     sorteo = true;
     document.querySelector('#amigo').setAttribute('disabled','false')
 }
