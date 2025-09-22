@@ -67,7 +67,9 @@ function actualizarLista() {
 
 
 
-/*let numeroSecreto = 0;
+/*Pedazo de código del juego del número secreto
+
+let numeroSecreto = 0;
 let intentos = 0;
 let listaNumerosSorteados = [];
 let numeroMaximo = 10;
