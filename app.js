@@ -3,6 +3,7 @@
 let listaDeAmigos = [];
 let amigoDeUsuario = '';
 let amigoSecreto = '';
+let sorteo = true;
 
 //Función auxiliar para asignar texto a un elemento HTML
 function asignarTextoElemento(elemento, texto) {
@@ -16,19 +17,31 @@ function limpiarCaja() {
     document.querySelector('#amigo').value = '';
 }
 
-//Función que elije un amigo al azar
+//Función que elije un amigo al azar y reinicia el sorteo
 function sortearAmigo() {
+    if (sorteo === true) {
     document.querySelector('#amigo').setAttribute('disabled','true');
     let numeroGenerado =  Math.floor(Math.random()*listaDeAmigos.length);
-
-    console.log(numeroGenerado);
-    console.log(listaNumerosSorteados);
-
-   asignarTextoElemento('h2',`Tu amigo secreto es: ${listaDeAmigos[numeroGenerado]}`);
+    asignarTextoElemento('h2',`Tu amigo secreto es: ${listaDeAmigos[numeroGenerado]}`);
+    document.querySelector('.button-draw').innerHTML = `
+    <img src="assets/play_circle_outline.png" alt="Ícono para sortear">
+    Reiniciar sorteo`
+    sorteo = false;
+    }
+    else {
+        reiniciarSorteo();
+        document.getElementById('amigo').removeAttribute('disabled');
+        document.querySelector('.button-draw').textContent = 'Sortear amigo';
+        asignarTextoElemento('h2','Puedes agregar más amigos si quieres');
+        limpiarCaja();
+        sorteo = true;
+    }
 }
+
 
 // Función que agrega amigos a la lista y borra la caja de texto
 function agregarAmigo() {
+    asignarTextoElemento('h2','Puedes agregar más amigos si quieres');
     amigoDeUsuario = document.getElementById('amigo').value;
     limpiarCaja();
     if (listaDeAmigos.includes(amigoDeUsuario)) {
@@ -42,6 +55,19 @@ function agregarAmigo() {
         actualizarLista();;
         }
     }
+}
+
+// Función que reinicia el sorteo
+function reiniciarSorteo() {
+    listaDeAmigos = [];
+    asignarTextoElemento('h2','La lista se ha reiniciado, puedes agregar nuevos amigos');
+    let listaHTML = document.querySelector('ul');
+    listaHTML.innerHTML = ''
+    document.querySelector('.button-draw').innerHTML = `
+    <img src="assets/play_circle_outline.png" alt="Ícono para sortear">
+    Sortear amigo`
+    sorteo = true;
+    document.querySelector('#amigo').setAttribute('disabled','false')
 }
 
 // Agregar un evento que active agregarAmigo() al presionar Enter
